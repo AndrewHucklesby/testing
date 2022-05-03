@@ -41,30 +41,30 @@ subjects:
 apiVersion: v1
 kind: Service
 metadata:
-  name: portainer-agent
+  name: portainer-edge-agent
   namespace: portainer
 spec:
   clusterIP: None
   selector:
-    app: portainer-agent
+    app: portainer-edge-agent
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: portainer-agent
+  name: portainer-edge-agent
   namespace: portainer
 spec:
   selector:
     matchLabels:
-      app: portainer-agent
+      app: portainer-edge-agent
   template:
     metadata:
       labels:
-        app: portainer-agent
+        app: portainer-edge-agent
     spec:
       serviceAccountName: portainer-sa-clusteradmin
       containers:
-        - name: portainer-agent
+        - name: portainer-edge-agent
           image: portainerci/agent:2.13
           imagePullPolicy: Always
           env:
@@ -77,7 +77,7 @@ spec:
             - name: EDGE
               value: "1"
             - name: AGENT_CLUSTER_ADDR
-              value: "portainer-agent"
+              value: "portainer-edge-agent"
             - name: AGENT_SECRET
               valueFrom:
                 configMapKeyRef:
